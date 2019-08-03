@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+
             android:id="@+id/no_articles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,13 +26,13 @@
                 android:gravity="center"
                 tools:ignore="UnusedAttribute"
                 android:src="@drawable/ic_saved_list_black_24dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="You have no saved articles yet."
-            android:gravity="center"
-            tools:ignore="UnusedAttribute"
-            android:textSize="22sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You have no saved articles yet."
+                android:gravity="center"
+                tools:ignore="UnusedAttribute"
+                android:textSize="22sp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,10 +48,10 @@
         android:layout_width="wrap_content"
         android:id="@+id/swipeRefresh"
         android:layout_height="wrap_content">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/headlines_list"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/headlines_list"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     <ProgressBar
         android:id="@+id/loadingFirst"
@@ -81,10 +82,10 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
                 <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Powered by " />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Powered by " />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
