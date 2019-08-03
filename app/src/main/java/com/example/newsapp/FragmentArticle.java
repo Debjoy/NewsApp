@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -25,7 +26,9 @@ public class FragmentArticle extends Fragment{
     private ActionBar actionBar;
     private WebView webview;
     private ProgressBar spinner;
+    private ProgressBar amtProgress;
     private SwipeRefreshLayout mSwipeRefresh;
+
     String showHideInitialUse="show";
     FragmentArticle(News news, Menu myMenu, ActionBar actionBar, SwipeRefreshLayout mSwipeRefresh){
         this.myMenu=myMenu;
@@ -38,9 +41,13 @@ public class FragmentArticle extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.article_view_fragment,container,false);
         spinner=view.findViewById(R.id.loadingPage);
+        amtProgress=view.findViewById(R.id.progress_amt);
+
 
         MenuItem searchViewItem = myMenu.findItem(R.id.app_bar_search);
         MenuItem urlPass=myMenu.findItem(R.id.urlPass);
+        amtProgress.setMax(100);
+
         urlPass.setTitle(news.getArticle_url());
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchViewItem);
         while(!searchView.isIconified()){searchView.setIconified(true);}
@@ -64,6 +71,14 @@ public class FragmentArticle extends Fragment{
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         // Force links and redirects to open in the WebView instead of in a browser
+
+        webview.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                amtProgress.setProgress(newProgress);
+            }
+        });
         webview.loadUrl(news.getArticle_url());
         return view;
     }
@@ -73,14 +88,14 @@ public class FragmentArticle extends Fragment{
         public void onPageStarted(WebView webview, String url, Bitmap favicon){
             if(showHideInitialUse.equals("show")){
                 webview.setVisibility(webview.VISIBLE);
-                spinner.setVisibility(View.GONE);
+               spinner.setVisibility(View.GONE);
             }
         }
-
         @Override
         public void onPageFinished(WebView view, String url){
             showHideInitialUse="hide";
             spinner.setVisibility(View.GONE);
+            amtProgress.setVisibility(View.GONE);
             view.setVisibility(webview.VISIBLE);
             super.onPageFinished(view,url);
         }
